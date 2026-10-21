@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d10">
+  <title>HUMEN | Organization Contact Form</title>
+  <style>
+    :root {
+      --ink: #080d10;
+      --panel: #11191e;
+      --panel-2: #172126;
+      --gold: #efa83b;
+      --gold-dark: #d99022;
+      --white: #f0f2f3;
+      --muted: #b6bec5;
+      --line: #344047;
+      --success: #b8e6c3;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    .topbar {
+      border-bottom: 1px solid #293238;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; padding: 20px clamp(20px, 6vw, 76px);
+      color: #aeb7be; font-size: 12px; font-weight: 800;
+      letter-spacing: .22em; text-transform: uppercase;
+    }
+    .topbar .slash { color: var(--gold); padding: 0 7px; }
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(260px, .75fr);
+      gap: clamp(28px, 6vw, 78px); align-items: center;
+      padding: clamp(44px, 7vw, 88px) clamp(20px, 6vw, 76px) 64px;
+      max-width: 1240px; margin: 0 auto;
+    }
+    .eyebrow {
+      color: var(--gold); font-size: 12px; font-weight: 900;
+      letter-spacing: .24em; text-transform: uppercase; margin: 0 0 15px;
+    }
+    h1 {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-stretch: condensed; text-transform: uppercase;
+      font-size: clamp(3.3rem, 7.2vw, 6.1rem); line-height: .91;
+      letter-spacing: -.025em; margin: 0 0 24px; max-width: 680px;
+    }
+    h1 span { color: var(--gold); }
+    .intro { color: #c4cbd0; font-size: clamp(1rem, 1.5vw, 1.14rem); max-width: 590px; }
+    .hero-note {
+      border-left: 4px solid var(--gold); background: #11191e;
+      padding: 23px 24px; margin-top: 28px; color: var(--muted);
+      max-width: 510px; font-size: .95rem;
+    }
+    .hero-note strong { color: var(--white); display: block; margin-bottom: 5px; }
+    .side-card {
+      border: 1px solid #303a40; border-right: 9px solid var(--gold);
+      border-bottom: 9px solid var(--gold); background:
+        linear-gradient(145deg, rgba(239,168,59,.10), transparent 48%),
+        var(--panel);
+      padding: clamp(26px, 4vw, 42px); min-height: 310px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .wordmark { font-size: clamp(2.5rem, 6vw, 4.8rem); font-weight: 950; letter-spacing: .08em; line-height: 1; }
+    .wordmark span { color: var(--gold); }
+    .side-card h2 { font-size: 1.35rem; margin: 30px 0 8px; text-transform: uppercase; }
+    .side-card p { color: var(--muted); margin: 0; }
+    .band {
+      background: var(--gold); color: #090d10;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; padding: 26px clamp(20px, 6vw, 76px);
+    }
+    .band-item { max-width: 350px; margin: auto; }
+    .band-item strong { font-size: 1.05rem; display: block; text-transform: uppercase; letter-spacing: .06em; }
+    .band-item span { font-size: .92rem; }
+    main { max-width: 980px; margin: 0 auto; padding: 64px 20px 82px; }
+    .section-heading { margin-bottom: 30px; }
+    .section-heading h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1; margin: 0 0 12px; text-transform: uppercase; }
+    .section-heading p { color: var(--muted); margin: 0; }
+    form { background: var(--panel); border: 1px solid #2d383e; padding: clamp(20px, 4vw, 38px); }
+    fieldset { border: 0; padding: 0; margin: 0 0 32px; min-width: 0; }
+    legend {
+      display: block; width: 100%; color: var(--gold); font-weight: 900;
+      letter-spacing: .13em; text-transform: uppercase; font-size: .8rem;
+      border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 20px;
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-size: .9rem; font-weight: 700; color: #e4e8eb; }
+    .required { color: var(--gold); }
+    input, select, textarea {
+      width: 100%; border: 1px solid #45525a; border-radius: 2px;
+      background: #0b1115; color: var(--white); padding: 13px 14px;
+      font: inherit; font-size: 16px; outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    input::placeholder, textarea::placeholder { color: #77838b; }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(239,168,59,.14); }
+    textarea { min-height: 125px; resize: vertical; }
+    .hint { color: #929da5; font-size: .8rem; }
+    .checkrow { display: flex; gap: 11px; align-items: flex-start; color: var(--muted); font-size: .9rem; }
+    .checkrow input { width: 18px; min-width: 18px; margin-top: 3px; accent-color: var(--gold); }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+    button {
+      appearance: none; border: 0; background: var(--gold); color: #080d10;
+      font: inherit; font-weight: 950; text-transform: uppercase; letter-spacing: .1em;
+      padding: 16px 25px; cursor: pointer; transition: background .15s, transform .15s;
+    }
+    button:hover { background: #ffc15b; transform: translateY(-1px); }
+    button:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
+    .privacy { color: #98a3aa; font-size: .82rem; max-width: 390px; }
+    footer {
+      border-top: 1px solid #293238; padding: 28px clamp(20px, 6vw, 76px);
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      color: #929da5; font-size: .85rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .honeypot { position: absolute; left: -5000px; width: 1px; height: 1px; overflow: hidden; }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; font-size: 10px; letter-spacing: .13em; }
+      .hero { grid-template-columns: 1fr; padding-bottom: 42px; }
+      .side-card { min-height: 250px; }
+      .band { grid-template-columns: 1fr; gap: 16px; }
+      .band-item { margin: 0; max-width: none; }
+      .grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div>HUMEN <span class="slash">/</span> THE MANUAL</div>
+    <div>Organization Inquiry</div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <p class="eyebrow">For organizations ready to connect</p>
+      <h1>Let's build<br>something <span>human.</span></h1>
+      <p class="intro">Share a little about your organization and the best way to reach you. The HUMEN team can use this information to follow up about potential partnerships, programs, speaking, curriculum, or other opportunities.</p>
+      <div class="hero-note">
+        <strong>Start the conversation.</strong>
+        Complete the form below with your organization’s details and a short note about what you have in mind.
+      </div>
+    </div>
+    <aside class="side-card" aria-label="HUMEN organization inquiry">
+      <div>
+        <div class="wordmark">HUM<span>E</span>N</div>
+        <h2>People first. Real conversations.</h2>
+        <p>Organization contact and partnership inquiry</p>
+      </div>
+      <p style="color:var(--gold);font-weight:900;letter-spacing:.18em;text-transform:uppercase;font-size:.75rem;">HUMEN.ME</p>
+    </aside>
+  </section>
+
+  <section class="band" aria-label="Inquiry topics">
+    <div class="band-item"><strong>Partnerships</strong><span>Explore ways to work together.</span></div>
+    <div class="band-item"><strong>Programs &amp; Curriculum</strong><span>Ask about educational opportunities.</span></div>
+    <div class="band-item"><strong>Speaking &amp; Events</strong><span>Share details about an upcoming event.</span></div>
+  </section>
+
+  <main>
+    <div class="section-heading">
+      <p class="eyebrow">Get in touch</p>
+      <h2>Organization information</h2>
+      <p>A short form to get the conversation started. Only the fields marked <span class="required">*</span> are required; everything else is optional.</p>
+    </div>
+
+    <form action="https://formsubmit.co/kgalloway56@yahoo.com" method="POST">
+      <input type="hidden" name="_subject" value="New HUMEN.me Organization Inquiry">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="true">
+      <div class="honeypot" aria-hidden="true">
+        <label>Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <fieldset>
+        <legend>01 / Organization & contact</legend>
+        <div class="grid">
+          <div class="field">
+            <label for="organization">Organization name <span class="required">*</span></label>
+            <input id="organization" name="Organization Name" autocomplete="organization" required placeholder="Your organization">
+          </div>
+          <div class="field">
+            <label for="contact">Your name <span class="required">*</span></label>
+            <input id="contact" name="Contact Name" autocomplete="name" required placeholder="First and last name">
+          </div>
+          <div class="field">
+            <label for="email">Email address <span class="required">*</span></label>
+            <input id="email" name="Contact Email" type="email" autocomplete="email" required placeholder="name@organization.org">
+          </div>
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input id="phone" name="Contact Phone" type="tel" autocomplete="tel" placeholder="Optional">
+          </div>
+          <div class="field">
+            <label for="title">Job title / role</label>
+            <input id="title" name="Contact Job Title" autocomplete="organization-title" placeholder="Optional">
+          </div>
+          <div class="field">
+            <label for="type">Organization type</label>
+            <select id="type" name="Organization Type">
+              <option value="">Select if applicable</option>
+              <option>Nonprofit / community organization</option>
+              <option>School / college / university</option>
+              <option>Business / employer</option>
+              <option>Healthcare / mental health provider</option>
+              <option>Government / public agency</option>
+              <option>Faith-based organization</option>
+              <option>Media / entertainment</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="website">Organization website</label>
+            <input id="website" name="Organization Website" type="url" autocomplete="url" placeholder="https:// (optional)">
+          </div>
+          <div class="field">
+            <label for="location">City / state</label>
+            <input id="location" name="Organization Location" autocomplete="address-level2" placeholder="Optional">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>02 / Your inquiry</legend>
+        <div class="grid">
+          <div class="field">
+            <label for="interest">What are you interested in? <span class="required">*</span></label>
+            <select id="interest" name="Inquiry Topic" required>
+              <option value="">Choose a topic</option>
+              <option>Book / The Manual</option>
+              <option>Original album / music</option>
+              <option>Curriculum / educational program</option>
+              <option>Speaking engagement</option>
+              <option>Workshop / group program</option>
+              <option>Community partnership</option>
+              <option>Media / press</option>
+              <option>Sponsorship / funding</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="audience">Who is this for?</label>
+            <input id="audience" name="Audience Served" placeholder="e.g. students, staff, community">
+          </div>
+          <div class="field">
+            <label for="timeframe">Target date / timeframe</label>
+            <input id="timeframe" name="Target Date / Timeframe" placeholder="Optional">
+          </div>
+          <div class="field">
+            <label for="preferred">Preferred contact method</label>
+            <select id="preferred" name="Preferred Contact Method">
+              <option value="">No preference</option>
+              <option>Email</option>
+              <option>Phone call</option>
+              <option>Text message</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="message">How can HUMEN help? <span class="required">*</span></label>
+            <textarea id="message" name="Message" required placeholder="Briefly tell us what you have in mind or what you would like to learn more about."></textarea>
+          </div>
+          <div class="field full">
+            <label for="referral">How did you hear about HUMEN?</label>
+            <input id="referral" name="How They Heard About HUMEN" placeholder="Optional">
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="field" style="margin-bottom:24px;">
+        <label class="checkrow" for="consent">
+          <input id="consent" name="Contact Permission" type="checkbox" value="Yes, HUMEN may contact me about this inquiry" required>
+          <span>I agree that HUMEN may contact me about this inquiry. <span class="required">*</span></span>
+        </label>
+      </div>
+      <div class="actions">
+        <button type="submit">Submit inquiry <span aria-hidden="true">→</span></button>
+        <p class="privacy">Only three information fields and your contact permission are required. Everything else is optional.</p>
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    <div>HUMEN / THE MANUAL</div>
+    <div><a href="https://humen.me" target="_blank" rel="noopener noreferrer">Visit humen.me</a></div>
+  </footer>
+</body>
+</html>
